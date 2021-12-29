@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -11,8 +12,8 @@ import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AccountComponent } from './account/account.component';
 import { UserComponent } from './user/user.component';
-import {RegisterComponent} from "../auth/component/register/register.component";
-import {LogoutComponent} from "../auth/component/logout/logout.component";
+import { RegisterComponent } from './register/register.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {LogoutComponent} from "../auth/component/logout/logout.component";
     LeaderboardComponent,
     AccountComponent,
     UserComponent,
+    LoginComponent,
     RegisterComponent,
     LogoutComponent,
   ],
