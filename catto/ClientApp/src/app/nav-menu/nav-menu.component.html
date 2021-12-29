@@ -1,43 +1,21 @@
 <header>
-  <nav>
-    <div class="container">
-      <a [routerLink]="['/']">FindTheCatto</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span></span>
-      </button>
-      <div
+  <nav class="container flex flex-wrap justify-between max-w-full">
+    <div class="flex items-start">
+      <a class="text-2xl font-medium text-white" [routerLink]="['/']">FindTheCatto</a>
+      </div>
+      <div class="flex items-end justify-end space-x-2"
         [ngClass]="{ show: isExpanded }"
       >
-        <ul>
-          <li
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
             <a [routerLink]="['/']">Home</a>
-          </li>
-          <li [routerLinkActive]="['link-active']">
             <a [routerLink]="['/game']"
             >Game</a
             >
-          </li>
-          <li [routerLinkActive]="['link-active']">
             <a [routerLink]="['/leaderboard']"
             >Leaderboard</a
             >
-          </li>
-          <li [routerLinkActive]="['link-active']">
             <a [routerLink]="['/account']"
             >Account</a
             >
-          </li>
-        </ul>
       </div>
-    </div>
   </nav>
 </header>
