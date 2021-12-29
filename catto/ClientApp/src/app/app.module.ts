@@ -14,6 +14,7 @@ import { AccountComponent } from './account/account.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { LogoutComponent } from './logout/logout.component';
+import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LogoutComponent } from './logout/logout.component';
     LoginComponent,
     RegisterComponent,
     LogoutComponent,
+    AvatarComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,6 +39,8 @@ import { LogoutComponent } from './logout/logout.component';
       { path: 'game', component: GameComponent },
       { path: 'leaderboard', component: LeaderboardComponent },
       { path: 'account', component: AccountComponent },
+      { path: 'login', component: LoginComponent },
+      { path: 'register', component: RegisterComponent },
     ]),
   ],
   providers: [],
