@@ -1,0 +1,9 @@
+.btn {
+  @apply py-1 px-8 rounded-full text-white;
+}
+.btn-blue {
+  @apply bg-indigo-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-indigo-600;
+}
