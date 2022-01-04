@@ -5,9 +5,11 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  public isAuthenticated = false;
   constructor(private router: Router) {}
 
   logout(): void {
     this.router.navigate(['/login']);
+    this.isAuthenticated = false;
   }
 }
