@@ -6,13 +6,23 @@ public class Token
     public string TokenKey { get; set; }
     
     public DateTime? DiscardAt { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     
-    public virtual List<User> Users { get; set; }
+    public int UserId { get; set; }
+    public User User { get; set; }
     
-    public Token(string tokenKey)
+    public Token()
     {
-        TokenKey = tokenKey;
-        CreatedAt = DateTime.Now;
     }
+    
+    public static Token GenerateToken(int userID)
+    {
+        return new Token
+        {
+            TokenKey = Guid.NewGuid().ToString(),
+            UserId = userID
+        };
+    }
+    
+    
 }
