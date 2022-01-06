@@ -13,7 +13,6 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AccountComponent } from './account/account.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AvatarComponent } from './avatar/avatar.component';
 
 @NgModule({
@@ -27,7 +26,6 @@ import { AvatarComponent } from './avatar/avatar.component';
     UserComponent,
     LoginComponent,
     RegisterComponent,
-    LogoutComponent,
     AvatarComponent,
   ],
   imports: [
