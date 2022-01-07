@@ -1,7 +1,9 @@
-﻿using catto.Models;
+﻿using catto.DTO;
+using catto.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+namespace catto.Provider;
 public class UserProvider
 {
     private readonly CattoContext _context;
@@ -11,9 +13,17 @@ public class UserProvider
         _context = context;
     }
 
-    public async Task<User> Register(User user)
+    public async Task<UserDto?> Register(UserDto userDto)
     {
+        var user = new User()
+        {
+            Username = userDto.Username,
+            Password = userDto.Password,
+
+        };
+        
         var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
+        
         if (userExists)
         {
             return null;
@@ -22,9 +32,10 @@ public class UserProvider
         var createdUser = await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
         // created something need to return a 201
-        return createdUser.Entity;
-    }
 
+        return UserDto.FromUser(createdUser.Entity);
+    }
+    
     public async Task<User?> GetUserFromToken(HttpContext httpContext)
     {
         var token = httpContext.Request.Cookies["Token"];
@@ -32,9 +43,37 @@ public class UserProvider
         {
             return null;
         }
-        var user = await _context.Tokens
+        var userFromToken = await _context.Tokens
             .Include(t => t.User)
             .FirstOrDefaultAsync(t => t.TokenKey == token);
-        return user?.User;
+        return userFromToken?.User;
+    }
+
+    //TODO
+    public async Task<UserDto?> Login(UserDto userDto)
+    {
+        var userLogin = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username && u.Password == userDto.Password);
+        
+        return UserDto.FromUser(userLogin);
+    }
+    
+    //TODO
+    public async Task<ActionResult<UserDto>> Logout(string tokenKey)
+    {
+        return null;
+    }
+    
+    public async Task<UserDto> UpdateUser(UserDto userDto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+        if (user == null)
+        {
+            return null;
+        }
+
+        user.Username = userDto.Username;
+        user.Password = userDto.Password;
+        await _context.SaveChangesAsync();
+        return UserDto.FromUser(user);
     }
 }
