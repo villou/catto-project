@@ -1,16 +1,44 @@
 using catto.Models;
+using catto.Provider;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CattoContext>();
 builder.Services.AddTransient<UserProvider>();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+    app.UseDeveloperExceptionPage();
+else
+    app.UseHsts();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<CattoContext>();
+    context.Database.EnsureCreated();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+app.UseAuthorization();
 app.UseSwagger();
-app.MapGet("/", () => "Hello World!");
 app.UseSwaggerUI();
+
+app.MapControllerRoute(
+    "default",
+    "{controller}/{action=Index}/{id?}");
+
+app.MapFallbackToFile("index.html");
+
 app.Run();
