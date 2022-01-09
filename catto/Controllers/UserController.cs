@@ -23,28 +23,29 @@ public class UserController : ControllerBase
     public async Task<ActionResult<User>> GetMe()
     {
         var user = await _userProvider.GetUserFromToken(HttpContext);
-        return user == null ? Unauthorized() : user;
+        return user == null ? Unauthorized() : Ok(user);
     }
 
-    // GET: api/User
+    // GET: api/user
     [HttpGet]
     public List<User> Get()
     {
         return _context.Users.ToList();
     }
 
-    // GET: api/User/5
+    // GET: api/user/1
     [HttpGet("{id}")]
     public async Task<ActionResult<UserDto>> GetUserById(int id)
     {
-        var user = await _context.Users.Select(u => UserDto.FromUser(u)).FirstOrDefaultAsync(u => u.Id == id);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
         {
-            return NotFound();
+            return NotFound("User not found");
         }
 
-        return user;
+        return Ok(UserDto.FromUser(user));
+        
     }
 
     [HttpPatch]
@@ -55,7 +56,6 @@ public class UserController : ControllerBase
     }
 
 
-    //TODO
     [HttpPost("login")]
     public async Task<ActionResult<UserDto?>> Login([FromBody] UserDto user)
     {
@@ -63,14 +63,15 @@ public class UserController : ControllerBase
 
         if (userLogin == null)
         {
-            return Unauthorized();
+            return Unauthorized("Invalid credentials");
         }
 
         var token = await _context.Tokens.AddAsync(Token.GenerateToken(userLogin.Id));
 
         HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
 
-        return userLogin;
+        //return userLogin;
+        return CreatedAtAction(nameof(Login), new { id = userLogin.Id }, userLogin);
     }
 
     [HttpPost("register")]
@@ -82,7 +83,9 @@ public class UserController : ControllerBase
 
         HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
 
-        return createdUser;
+        //return createdUser;
+        return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
+
     }
 
     [HttpPost("logout")]
@@ -93,7 +96,11 @@ public class UserController : ControllerBase
 
         var tokenToDelete = await _context.Tokens.FirstOrDefaultAsync(t => t.TokenKey == token);
         if (tokenToDelete != null) tokenToDelete.DiscardAt = DateTime.Now;
-//send badrequest if token is not found
+        
+        if (token == null)
+        {
+            return BadRequest("No token found");
+        }
         await _context.SaveChangesAsync();
 
         return Ok();

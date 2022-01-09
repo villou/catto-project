@@ -56,12 +56,7 @@ public class UserProvider
         
         return UserDto.FromUser(userLogin);
     }
-    
-    //TODO
-    public async Task<ActionResult<UserDto>> Logout(string tokenKey)
-    {
-        return null;
-    }
+
     
     public async Task<UserDto> UpdateUser(UserDto userDto)
     {
@@ -76,4 +71,5 @@ public class UserProvider
         await _context.SaveChangesAsync();
         return UserDto.FromUser(user);
     }
+    
 }
