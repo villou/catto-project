@@ -1,9 +1,10 @@
+import { NavbarService } from './service/navbar.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -14,6 +15,15 @@ import { AccountComponent } from './account/account.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'game', component: GameComponent },
+  { path: 'leaderboard', component: LeaderboardComponent },
+  { path: 'account', component: AccountComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+];
 
 @NgModule({
   declarations: [
@@ -32,16 +42,9 @@ import { AvatarComponent } from './avatar/avatar.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'game', component: GameComponent },
-      { path: 'leaderboard', component: LeaderboardComponent },
-      { path: 'account', component: AccountComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-    ]),
+    RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [NavbarService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

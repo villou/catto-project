@@ -1,5 +1,5 @@
 <header>
-  <nav class="container flex flex-wrap justify-between max-w-full">
+  <nav *ngIf="nav.visible" class="container flex flex-wrap justify-between max-w-full">
     <div class="flex items-start">
       <a class="text-2xl font-medium text-white" [routerLink]="['/']">FindTheCatto</a>
       </div>
