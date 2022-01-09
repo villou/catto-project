@@ -15,12 +15,12 @@ public class Token
     {
     }
     
-    public static Token GenerateToken(int userID)
+    public static Token GenerateToken(int userId)
     {
         return new Token
         {
             TokenKey = Guid.NewGuid().ToString(),
-            UserId = userID
+            UserId = userId
         };
     }
     
