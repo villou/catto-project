@@ -52,7 +52,8 @@ public class UserController : ControllerBase
     public async Task<ActionResult<UserDto>> Update(UserDto user)
     {
         var userToUpdate = await _userProvider.UpdateUser(user);
-        return userToUpdate;
+
+        return Ok(userToUpdate);
     }
 
 
@@ -69,6 +70,8 @@ public class UserController : ControllerBase
         var token = await _context.Tokens.AddAsync(Token.GenerateToken(userLogin.Id));
 
         HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
+        
+        await _context.SaveChangesAsync();
 
         //return userLogin;
         return CreatedAtAction(nameof(Login), new { id = userLogin.Id }, userLogin);
@@ -79,13 +82,15 @@ public class UserController : ControllerBase
     {
         var createdUser = await _userProvider.Register(user);
 
-        var token = await _context.Tokens.AddAsync(Token.GenerateToken(user.Id));
+        var token = await _context.Tokens.AddAsync(Token.GenerateToken(createdUser.Id));
 
         HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
+        
+        await _context.SaveChangesAsync();
 
-        //return createdUser;
+        // return createdUser;
         return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
-
+        
     }
 
     [HttpPost("logout")]

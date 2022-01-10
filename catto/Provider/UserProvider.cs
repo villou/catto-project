@@ -17,13 +17,14 @@ public class UserProvider
     {
         var user = new User()
         {
+            Id = userDto.Id,
             Username = userDto.Username,
             Password = userDto.Password,
 
         };
         
         var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
-        
+
         if (userExists)
         {
             return null;
@@ -31,7 +32,6 @@ public class UserProvider
         
         var createdUser = await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
-        // created something need to return a 201
 
         return UserDto.FromUser(createdUser.Entity);
     }
@@ -61,13 +61,10 @@ public class UserProvider
     public async Task<UserDto> UpdateUser(UserDto userDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
-        if (user == null)
-        {
-            return null;
-        }
-
+        
         user.Username = userDto.Username;
         user.Password = userDto.Password;
+        
         await _context.SaveChangesAsync();
         return UserDto.FromUser(user);
     }
