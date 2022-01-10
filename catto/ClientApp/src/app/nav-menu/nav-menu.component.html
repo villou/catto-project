@@ -1,12 +1,12 @@
 <header>
   <nav *ngIf="nav.visible" class="container flex flex-wrap justify-between max-w-full">
     <div class="flex items-start">
-      <a class="text-2xl font-medium text-white" [routerLink]="['/']">FindTheCatto</a>
+      <a class="text-2xl font-medium text-white" [routerLink]="['/home']">FindTheCatto</a>
       </div>
       <div class="flex items-end justify-end space-x-4"
         [ngClass]="{ show: isExpanded }"
       >
-            <a [routerLink]="['/']">Home</a>
+            <a [routerLink]="['/home']">Home</a>
             <a [routerLink]="['/game']"
             >Game</a
             >

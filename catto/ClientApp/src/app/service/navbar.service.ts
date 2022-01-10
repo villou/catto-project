@@ -8,6 +8,10 @@ export class NavbarService {
     this.visible = true;
   }
 
+  show() {
+    this.visible = true;
+  }
+
   hide() {
     this.visible = false;
   }

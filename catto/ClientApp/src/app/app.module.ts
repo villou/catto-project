@@ -2,7 +2,7 @@ import { NavbarService } from './service/navbar.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -18,6 +18,7 @@ import { AvatarComponent } from './avatar/avatar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'game', component: GameComponent },
   { path: 'leaderboard', component: LeaderboardComponent },
   { path: 'account', component: AccountComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(routes),
   ],
