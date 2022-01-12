@@ -15,13 +15,28 @@ import { AccountComponent } from './account/account.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, pathMatch: 'full' },
-  { path: 'game', component: GameComponent },
-  { path: 'leaderboard', component: LeaderboardComponent },
-  { path: 'account', component: AccountComponent },
+  {
+    path: '',
+    component: HomeComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    pathMatch: 'full',
+    canActivate: [AuthGuard],
+  },
+  { path: 'game', component: GameComponent, canActivate: [AuthGuard] },
+  {
+    path: 'leaderboard',
+    component: LeaderboardComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ];

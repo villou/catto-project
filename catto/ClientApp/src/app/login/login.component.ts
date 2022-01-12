@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data: User) => {
           this.user = data;
+          this.authService.getCurrentUser(this.user);
         },
         (error) => {
           console.log(error);
@@ -46,9 +47,16 @@ export class LoginComponent implements OnInit {
 
   login() {
     let userLogged = {
-      Username: this.loginForm.value.username,
-      Password: this.loginForm.value.password,
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
     };
+
+    if (!userLogged.username) {
+      return;
+    }
+    if (!userLogged.password) {
+      return;
+    }
 
     this.user = userLogged;
     this.loginUser();

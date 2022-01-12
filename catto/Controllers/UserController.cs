@@ -84,6 +84,7 @@ public class UserController : ControllerBase
 
         var token = await _context.Tokens.AddAsync(Token.GenerateToken(createdUser.Id));
 
+        //Gerer si le user est déjà créé
         HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
         
         await _context.SaveChangesAsync();
