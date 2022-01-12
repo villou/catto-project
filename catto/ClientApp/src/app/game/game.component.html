@@ -1,17 +1,22 @@
   <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0">
-    <div class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-indigo-300 opacity-60 mx-6 lg:mx-0">
+    <div class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-indigo-900 opacity-95 mx-6 lg:mx-0">
       <div class="p-4 md:p-12 text-center lg:text-left">
-        <h1 class="text-3xl font-bold pt-8 lg:pt-0 text-black">Do you see a cat ? 🐱 </h1>
-        <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-indigo-900 opacity-25"></div>
-        <p class="pt-2 text-black text-xs lg:text-sm flex items-center justify-center lg:justify-start">Just select whether or not you see a cat in the picture, using the appropriate cats above.</p>
-        <p class="pt-4 text-black text-base font-bold flex items-center justify-center lg:justify-start">Your score : <span class="pl-2 font-normal">12</span> </p>
+
+        <!-- Image for mobile view-->
+        <div class="block lg:hidden  mx-auto mt-2 h-60 w-68 bg-cover bg-center"
+          style="background-image: url('https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy83MTQ4MzMzL29yaWdpbi5qcGciLCJleHBpcmVzX2F0IjoxNjc1Mjg2MzcxfQ.msVTVRQ7w64k9kSrwHOvm-8_1_raAnnqpL8vT_IHZOQ/img.jpg?width=980')"></div>
+
+        <h1 class="text-3xl font-bold pt-8 lg:pt-0 text-white">Do you see a cat ? 🐱 </h1>
+        <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-indigo-500 opacity-25"></div>
+        <p class="pt-2 text-gray-400 text-xs lg:text-sm flex items-center justify-center lg:justify-start">Just select whether or not you see a cat in the picture, using the appropriate cats above.</p>
+        <p class="pt-4 text-white text-base font-bold flex items-center justify-center lg:justify-start">Your score : <span class="pl-2 font-normal text-white">12</span> </p>
 
       <!--Cat buttons-->
         <div class="pt-8 flex items-center justify-center">
-          <button class="m-1 w-12 h-12 relative flex justify-center items-center rounded-full bg-white hover:bg-green-200">
+          <button class="m-1 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-400 hover:bg-slate-500">
             <img src="assets/icons/isCat.png" alt="cat" class="rounded-lg">
           </button>
-          <button class="ml-6 w-12 h-12 relative flex justify-center items-center rounded-full bg-white hover:bg-red-200">
+          <button class="ml-6 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-400 hover:bg-slate-500">
                 <img src="assets/icons/isNotCat.png" alt="cat" class="rounded-lg">
           </button>
         </div>

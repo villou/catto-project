@@ -19,10 +19,11 @@
         <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8" id="password" type="password">
       </div>
       <div>
-        <button class="btn btn-blue mb-10 text-sm">
+        <button class="btn btn-blue mb-10 text-sm" (click)="update()">
           Update
         </button>
       </div>
-    </div>
+      <span class="mb-8 text-center text-gray-200 md:text-xs"><button class="underline" (click)="delete()">delete account</button></span>
+        </div>
   </form>
 </div>
