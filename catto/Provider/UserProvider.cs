@@ -23,12 +23,6 @@ public class UserProvider
 
         };
         
-        var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
-
-        if (userExists)
-        {
-            return null;
-        }
         
         var createdUser = await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
@@ -54,6 +48,11 @@ public class UserProvider
     {
         var userLogin = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username && u.Password == userDto.Password);
         
+        if (userLogin == null)
+        {
+            return null;
+        }
+        
         return UserDto.FromUser(userLogin);
     }
 
@@ -62,7 +61,7 @@ public class UserProvider
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
         
-        user.Username = userDto.Username;
+       // user.Username = userDto.Username;
         user.Password = userDto.Password;
         
         await _context.SaveChangesAsync();

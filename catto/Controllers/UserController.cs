@@ -10,105 +10,112 @@ namespace catto.Controllers;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly CattoContext _context;
-    private readonly UserProvider _userProvider;
+  private readonly CattoContext _context;
+  private readonly UserProvider _userProvider;
 
-    public UserController(CattoContext context, UserProvider userProvider)
+  public UserController(CattoContext context, UserProvider userProvider)
+  {
+    _context = context;
+    _userProvider = userProvider;
+  }
+
+  [HttpGet("me")]
+  public async Task<ActionResult<User>> GetMe()
+  {
+    var user = await _userProvider.GetUserFromToken(HttpContext);
+    return user == null ? Unauthorized() : Ok(user);
+  }
+
+  // GET: api/user
+  [HttpGet]
+  public List<User> Get()
+  {
+    return _context.Users.ToList();
+  }
+
+  // GET: api/user/1
+  [HttpGet("{id}")]
+  public async Task<ActionResult<UserDto>> GetUserById(int id)
+  {
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+    if (user == null)
     {
-        _context = context;
-        _userProvider = userProvider;
+      return NotFound("User not found");
     }
 
-    [HttpGet("me")]
-    public async Task<ActionResult<User>> GetMe()
+    return Ok(UserDto.FromUser(user));
+
+  }
+
+  [HttpPatch]
+  public async Task<ActionResult<UserDto>> Update(UserDto user)
+  {
+    var userToUpdate = await _userProvider.UpdateUser(user);
+
+    return Ok(userToUpdate);
+  }
+
+
+  [HttpPost("login")]
+  public async Task<ActionResult<UserDto?>> Login([FromBody] UserDto user)
+  {
+    var userLogin = await _userProvider.Login(user);
+
+    if (userLogin == null)
     {
-        var user = await _userProvider.GetUserFromToken(HttpContext);
-        return user == null ? Unauthorized() : Ok(user);
+      return Unauthorized("Invalid credentials");
     }
 
-    // GET: api/user
-    [HttpGet]
-    public List<User> Get()
+    var token = await _context.Tokens.AddAsync(Token.GenerateToken(userLogin.Id));
+
+    HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
+
+    await _context.SaveChangesAsync();
+
+    //return userLogin;
+    return CreatedAtAction(nameof(Login), new { id = userLogin.Id }, userLogin);
+  }
+
+  [HttpPost("register")]
+  public async Task<ActionResult<UserDto?>> Register(UserDto user)
+  {
+    var createdUser = await _userProvider.Register(user);
+
+    //return 409 is username already taken
+    var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
+
+    if (userExists)
     {
-        return _context.Users.ToList();
+      return Conflict("User already exists");
     }
 
-    // GET: api/user/1
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUserById(int id)
+    var token = await _context.Tokens.AddAsync(Token.GenerateToken(createdUser.Id));
+
+    HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
+
+    await _context.SaveChangesAsync();
+
+    // return createdUser;
+    return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
+
+  }
+
+  [HttpPost("logout")]
+  public async Task<ActionResult> Logout()
+  {
+    var token = HttpContext.Request.Cookies["Token"];
+    HttpContext.Response.Cookies.Delete("Token");
+
+    var tokenToDelete = await _context.Tokens.FirstOrDefaultAsync(t => t.TokenKey == token);
+    if (tokenToDelete != null) tokenToDelete.DiscardAt = DateTime.Now;
+
+    if (token == null)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-        if (user == null)
-        {
-            return NotFound("User not found");
-        }
-
-        return Ok(UserDto.FromUser(user));
-        
+      return BadRequest("No token found");
     }
+    await _context.SaveChangesAsync();
 
-    [HttpPatch]
-    public async Task<ActionResult<UserDto>> Update(UserDto user)
-    {
-        var userToUpdate = await _userProvider.UpdateUser(user);
-
-        return Ok(userToUpdate);
-    }
-
-
-    [HttpPost("login")]
-    public async Task<ActionResult<UserDto?>> Login([FromBody] UserDto user)
-    {
-        var userLogin = await _userProvider.Login(user);
-
-        if (userLogin == null)
-        {
-            return Unauthorized("Invalid credentials");
-        }
-
-        var token = await _context.Tokens.AddAsync(Token.GenerateToken(userLogin.Id));
-
-        HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
-        
-        await _context.SaveChangesAsync();
-
-        //return userLogin;
-        return CreatedAtAction(nameof(Login), new { id = userLogin.Id }, userLogin);
-    }
-
-    [HttpPost("register")]
-    public async Task<ActionResult<UserDto?>> Register(UserDto user)
-    {
-        var createdUser = await _userProvider.Register(user);
-
-        var token = await _context.Tokens.AddAsync(Token.GenerateToken(createdUser.Id));
-
-        //Gerer si le user est déjà créé
-        HttpContext.Response.Cookies.Append("Token", token.Entity.TokenKey);
-        
-        await _context.SaveChangesAsync();
-
-        // return createdUser;
-        return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
-        
-    }
-
-    [HttpPost("logout")]
-    public async Task<ActionResult> Logout()
-    {
-        var token = HttpContext.Request.Cookies["Token"];
-        HttpContext.Response.Cookies.Delete("Token");
-
-        var tokenToDelete = await _context.Tokens.FirstOrDefaultAsync(t => t.TokenKey == token);
-        if (tokenToDelete != null) tokenToDelete.DiscardAt = DateTime.Now;
-        
-        if (token == null)
-        {
-            return BadRequest("No token found");
-        }
-        await _context.SaveChangesAsync();
-
-        return Ok();
-    }
+    return Ok();
+  }
 }
