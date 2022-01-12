@@ -16,6 +16,8 @@
             <a [routerLink]="['/account']"
             >Account</a
             >
+           <a *ngIf="authService.isAuthenticated" (click)="logout()"><fa-icon [icon]="faSignOutAlt" class="text-sm cursor-pointer"></fa-icon></a>
+
       </div>
   </nav>
 </header>

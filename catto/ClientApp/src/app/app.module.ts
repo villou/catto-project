@@ -16,6 +16,7 @@ import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { AuthGuard } from './guard/auth.guard';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {
@@ -60,6 +61,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forRoot(routes),
+    FontAwesomeModule,
   ],
   providers: [NavbarService],
   bootstrap: [AppComponent],

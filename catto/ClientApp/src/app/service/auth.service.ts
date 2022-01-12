@@ -19,17 +19,16 @@ export class AuthService {
     private httpLogout: HttpClient,
     private http: HttpClient
   ) {
-    //fetch me & set le user
-  }
-
-  getCurrentUser(user: User) {
-    this.http.get<User>('api/User/me').subscribe(
+    http.get<User>('api/User/me').subscribe(
       (result) => {
         this.user = result;
+        this.isAuthenticated = true;
       },
       (error) => console.error(error)
     );
+  }
 
+  getCurrentUser(user: User) {
     if (user) {
       this.user = user;
       this.isAuthenticated = true;
