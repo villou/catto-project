@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using catto.Models;
 using catto.Provider;
 
@@ -11,6 +12,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<CattoContext>();
 builder.Services.AddTransient<UserProvider>();
+builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 
