@@ -123,22 +123,17 @@ public class UserController : ControllerBase
   }
   
   [HttpDelete]
-  public async Task<ActionResult> Delete(int id)
+  public async Task<ActionResult> Delete(UserDto user)
   {
-    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-    if (user == null)
+    var userToDelete = await _userProvider.DeleteUser(user);
+
+    if (userToDelete == null)
     {
-      return NotFound("User not found");
+      return BadRequest("Can't delete user");
     }
 
-    _context.Users.Remove(user);
-    var token = await _context.Tokens.FirstOrDefaultAsync(t => t.UserId == id);
-    if (token != null)
-    {
-      _context.Tokens.Remove(token);
-    }
     await _context.SaveChangesAsync();
-
     return Ok();
+
   }
 }

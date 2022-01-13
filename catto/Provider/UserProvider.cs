@@ -84,9 +84,17 @@ public class UserProvider
         if (user == null) 
         {
            return null; 
-        } 
-       
+        }
+
+        var token = await _context.Tokens.FirstOrDefaultAsync(t => t.UserId == user.Id);
+        if (token == null)
+        {
+            return null;
+        }
+
         _context.Users.Remove(user);
+        _context.Tokens.Remove(token);
+
         return UserDto.FromUser(user);
     }
 
