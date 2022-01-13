@@ -28,7 +28,12 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     public nav: NavbarService
-  ) {}
+  ) {
+    this.user = this.authService.user;
+    if (this.user) {
+      this.router.navigate(['/home']);
+    }
+  }
 
   loginUser() {
     this.http
@@ -36,12 +41,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data: User) => {
           this.user = data;
-          this.authService.getCurrentUser(this.user);
+          this.authService.setCurrentUser(this.user);
+          this.router.navigate(['/home']);
         },
         (error) => {
           console.log(error);
-        },
-        () => this.router.navigate(['/home'])
+        }
       );
   }
 

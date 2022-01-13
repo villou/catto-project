@@ -4,7 +4,7 @@
     justify-center
     h-screen
   ">
-  <form class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
+  <form [formGroup]="settingsForm" class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
     <div class="flex flex-col items-center">
       <h3 class="text-xl font-medium mb-10">My account</h3>
       <div>
@@ -12,11 +12,11 @@
       </div>
       <div>
         <label class="text-sm font-medium block mb-1 mt-6">Username</label>
-        <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-4" id="username" type="text" readonly>
+        <input class="text-white sm:text-sm rounded-3xl w-full py-1 px-2 mb-4 bg-slate-400" id="username" type="text" readonly>
       </div>
       <div>
         <label class="text-sm font-medium block mb-1">New password</label>
-        <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8" id="password" type="password">
+        <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8" id="password" type="password" formControlName="password">
       </div>
       <div>
         <button class="btn btn-blue mb-10 text-sm" (click)="update()">

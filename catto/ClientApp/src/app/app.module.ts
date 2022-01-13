@@ -23,13 +23,10 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthGuard],
   },
   {
     path: 'home',
     component: HomeComponent,
-    pathMatch: 'full',
-    canActivate: [AuthGuard],
   },
   { path: 'game', component: GameComponent, canActivate: [AuthGuard] },
   {

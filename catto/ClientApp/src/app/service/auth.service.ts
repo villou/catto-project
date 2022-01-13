@@ -17,23 +17,33 @@ export class AuthService {
   constructor(
     private router: Router,
     private httpLogout: HttpClient,
-    private http: HttpClient
+    http: HttpClient
   ) {
-    http.get<User>('api/User/me').subscribe(
-      (result) => {
-        this.user = result;
-        this.isAuthenticated = true;
-      },
-      (error) => console.error(error)
+    this.isAuthenticated = Boolean(
+      JSON.parse(localStorage.getItem('isAuthenticated') || 'false')
     );
+
+    if (this.isAuthenticated) {
+      http.get<User>('api/User/me').subscribe(
+        (result) => {
+          this.setCurrentUser(result);
+        },
+        (error) => console.error(error)
+      );
+    }
   }
 
-  getCurrentUser(user: User) {
+  setCurrentUser(user: User) {
     if (user) {
       this.user = user;
       this.isAuthenticated = true;
+    } else {
+      this.isAuthenticated = false;
     }
-    return false;
+    localStorage.setItem(
+      'isAuthenticated',
+      JSON.stringify(this.isAuthenticated)
+    );
   }
 
   logout(): void {
@@ -48,7 +58,8 @@ export class AuthService {
         },
         () => {
           this.isAuthenticated = false;
-          this.router.navigate(['/login']);
+          localStorage.removeItem('isAuthenticated');
+          this.router.navigate(['/home']);
         }
       );
   }

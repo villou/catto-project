@@ -49,10 +49,16 @@ public class UserController : ControllerBase
   }
 
   [HttpPatch]
-  public async Task<ActionResult<UserDto>> Update(UserDto user)
+  public async Task<ActionResult<UserDto>> Update([FromBody] UserDto user)
   {
     var userToUpdate = await _userProvider.UpdateUser(user);
+    
+    if (userToUpdate == null)
+    {
+      return BadRequest("Can't update user");
+    }
 
+    await _context.SaveChangesAsync();
     return Ok(userToUpdate);
   }
 
@@ -81,11 +87,8 @@ public class UserController : ControllerBase
   public async Task<ActionResult<UserDto?>> Register(UserDto user)
   {
     var createdUser = await _userProvider.Register(user);
-
-    //return 409 is username already taken
-    var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
-
-    if (userExists)
+    
+    if (createdUser == null)
     {
       return Conflict("User already exists");
     }
@@ -113,6 +116,26 @@ public class UserController : ControllerBase
     if (token == null)
     {
       return BadRequest("No token found");
+    }
+    await _context.SaveChangesAsync();
+
+    return Ok();
+  }
+  
+  [HttpDelete]
+  public async Task<ActionResult> Delete(int id)
+  {
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+    if (user == null)
+    {
+      return NotFound("User not found");
+    }
+
+    _context.Users.Remove(user);
+    var token = await _context.Tokens.FirstOrDefaultAsync(t => t.UserId == id);
+    if (token != null)
+    {
+      _context.Tokens.Remove(token);
     }
     await _context.SaveChangesAsync();
 

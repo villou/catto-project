@@ -1,9 +1,10 @@
 import { User } from './../model/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { NavbarService } from '../service/navbar.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
@@ -12,6 +13,14 @@ import { NavbarService } from '../service/navbar.service';
 })
 export class AccountComponent implements OnInit {
   user?: User | any | undefined;
+
+  settingsForm = new FormGroup({
+    password: new FormControl(''),
+  });
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(
     public nav: NavbarService,
@@ -22,18 +31,37 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.nav.show();
+    this.authService.isAuthenticated
+      ? (this.user = this.authService.user)
+      : (this.user = undefined);
   }
 
-  getMe() {
-    this.http.get<User>('api/User/me').subscribe(
-      (result) => {
-        this.user = result;
+  // pas fonctionnel encore
+  updateUser() {
+    this.http.patch<User>('api/User', this.user, this.httpOptions).subscribe(
+      (data: User) => {
+        this.user = data;
+        this.authService.setCurrentUser(this.user);
+        this.update();
       },
-      (error) => console.error(error)
+      (error) => {
+        console.log(error);
+      }
     );
   }
 
-  update() {}
+  update() {
+    let user = {
+      password: this.settingsForm.value.password,
+    };
+
+    if (!user.password) {
+      return;
+    }
+    this.user = user;
+
+    this.updateUser();
+  }
 
   delete() {}
 }

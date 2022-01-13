@@ -23,6 +23,13 @@ public class UserProvider
 
         };
         
+        var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
+
+        if (userExists)
+        {
+            return null;
+        }
+
         
         var createdUser = await _context.Users.AddAsync(user);
         await _context.SaveChangesAsync();
@@ -59,13 +66,28 @@ public class UserProvider
     
     public async Task<UserDto> UpdateUser(UserDto userDto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
-        
-       // user.Username = userDto.Username;
-        user.Password = userDto.Password;
-        
-        await _context.SaveChangesAsync();
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
+
+        if (user == null) 
+        {
+           return null; 
+        } 
+       
+        user.Password = userDto.Password; 
         return UserDto.FromUser(user);
     }
-    
+
+    public async Task<UserDto> DeleteUser(UserDto userDto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
+
+        if (user == null) 
+        {
+           return null; 
+        } 
+       
+        _context.Users.Remove(user);
+        return UserDto.FromUser(user);
+    }
+
 }
