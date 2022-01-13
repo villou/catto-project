@@ -15,6 +15,7 @@ export class AccountComponent implements OnInit {
   user?: User | any | undefined;
 
   settingsForm = new FormGroup({
+    username: new FormControl(''),
     password: new FormControl(''),
   });
 
@@ -41,8 +42,7 @@ export class AccountComponent implements OnInit {
     this.http.patch<User>('api/User', this.user, this.httpOptions).subscribe(
       (data: User) => {
         this.user = data;
-        this.authService.setCurrentUser(this.user);
-        this.update();
+        this.authService.logout();
       },
       (error) => {
         console.log(error);
@@ -52,12 +52,14 @@ export class AccountComponent implements OnInit {
 
   update() {
     let user = {
+      username: this.authService.user?.username,
       password: this.settingsForm.value.password,
     };
 
     if (!user.password) {
       return;
     }
+
     this.user = user;
 
     this.updateUser();
