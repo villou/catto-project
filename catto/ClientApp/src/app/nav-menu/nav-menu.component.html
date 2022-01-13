@@ -6,7 +6,7 @@
       <div class="flex items-end justify-end space-x-4"
         [ngClass]="{ show: isExpanded }"
       >
-      <span class="text-white">{{authService.user?.username}}</span>
+      <span class="text-white">[connected as: {{authService.user?.username}} ]</span>
             <a [routerLink]="['/home']">Home</a>
             <a *ngIf="!authService.isAuthenticated" [routerLink]="['/login']">Login</a>
             <a *ngIf="authService.isAuthenticated" [routerLink]="['/game']"

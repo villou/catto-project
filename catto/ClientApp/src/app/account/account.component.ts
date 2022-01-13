@@ -35,9 +35,10 @@ export class AccountComponent implements OnInit {
     this.authService.isAuthenticated
       ? (this.user = this.authService.user)
       : (this.user = undefined);
+
+    this.settingsForm.patchValue({ username: this.user.username });
   }
 
-  // pas fonctionnel encore
   updateUser() {
     this.http.patch<User>('api/User', this.user, this.httpOptions).subscribe(
       (data: User) => {
