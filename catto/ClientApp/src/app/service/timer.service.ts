@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class TimerService {
   remainingTime = 0;
   isStart = false;
+  onFinish = new EventEmitter<number>();
   private timeout?: number;
 
   constructor() {}
@@ -27,6 +28,7 @@ export class TimerService {
       }
       if (this.remainingTime === 0) {
         this.stopTimer();
+        this.onFinish.emit();
       }
     }, 1000);
     this.timeout = intervalId;
