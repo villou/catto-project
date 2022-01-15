@@ -14,6 +14,7 @@ export class TimerService {
   public startTimer(duration: number) {
     this.remainingTime = duration;
     this.isStart = true;
+    this.runTimer();
   }
 
   public stopTimer() {
@@ -25,6 +26,8 @@ export class TimerService {
     const intervalId = window.setInterval(() => {
       if (this.isStart) {
         this.remainingTime--;
+      } else {
+        this.stopTimer();
       }
       if (this.remainingTime === 0) {
         this.stopTimer();
