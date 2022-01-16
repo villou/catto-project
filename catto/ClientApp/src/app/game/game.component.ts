@@ -28,17 +28,18 @@ export class GameComponent implements OnInit {
     private authService: AuthService,
     public timerService: TimerService,
     public gameService: GameService
-  ) {
-    this.gameService.startGame();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.nav.show();
-    this.authService?.user;
+  }
+
+  startGame() {
+    this.gameService.startGame();
   }
 
   cat() {
-    this.timerService.startTimer(15);
+    console.log('cat');
   }
 
   noCat() {

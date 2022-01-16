@@ -1,4 +1,5 @@
 <div
+  *ngIf="gameService.state === 'playing'"
   class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0"
 >
   <div
@@ -67,4 +68,21 @@
   </div>
 </div>
 
-<app-card></app-card>
+<app-card
+  *ngIf="gameService.state === 'waiting'"
+  [title]="'Are you ready?'"
+  [description]="
+    'You will have 15 seconds per picture to tell if there is a cat or not.'
+  "
+  [icon]="'https://img.icons8.com/ultraviolet/40/000000/cat-footprint.png'"
+  [buttonText]="'Start game'"
+  (click)="startGame()"
+></app-card>
+<app-card
+  *ngIf="gameService.state === 'finished'"
+  [title]="'Its the end here !'"
+  [description]="'Your score was : '"
+  [icon]="'https://img.icons8.com/dotty/300/000000/f--k-this-thing.png'"
+  [buttonText]="'Play again'"
+  (click)="startGame()"
+></app-card>

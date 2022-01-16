@@ -4,10 +4,12 @@ import { Injectable } from '@angular/core';
 import { TimerService } from './timer.service';
 import { Image } from './../model/image';
 
+type State = 'waiting' | 'playing' | 'finished';
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
+  state: State = 'waiting';
   imagesStack: Image[] = [];
   imagesDone: Image[] = [];
   currentImage?: Image;
@@ -24,7 +26,12 @@ export class GameService {
     });
   }
 
+  setState(newState: State) {
+    this.state = newState;
+  }
+
   public startGame() {
+    this.setState('playing');
     this.shuffle();
     this.popStack();
     this.timerService.startTimer(15);
@@ -32,6 +39,7 @@ export class GameService {
 
   public endGame() {
     this.timerService.stopTimer();
+    this.setState('finished');
   }
 
   public setDone() {
