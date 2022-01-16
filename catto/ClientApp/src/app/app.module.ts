@@ -17,6 +17,7 @@ import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { AuthGuard } from './guard/auth.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CardComponent } from './game/card/card.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,7 @@ const routes: Routes = [
     LoginComponent,
     RegisterComponent,
     AvatarComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
