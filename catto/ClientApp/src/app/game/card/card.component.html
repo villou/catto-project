@@ -12,14 +12,13 @@
       </div>
       <div class="w-full pt-9 pr-4">
         <h3 class="font-bold text-white">{{ title }}</h3>
-        <p class="py-4 text-sm text-gray-100">
-          {{ description }}
-        </p>
+        <p class="py-4 text-sm text-gray-100">{{ description }} {{ score }}</p>
       </div>
     </div>
 
     <div class="p-4 flex space-x-4">
       <button
+        (click)="startGame()"
         class="px-4 py-3 text-center flex ml-auto text-white bg-indigo-900 border-0 focus:outline-none hover:bg-indigo-800 font-bold text-sm rounded-full"
       >
         {{ buttonText }}

@@ -31,6 +31,7 @@ export class GameService {
   }
 
   public startGame() {
+    this.imagesDone.length = 0;
     this.setState('playing');
     this.shuffle();
     this.popStack();

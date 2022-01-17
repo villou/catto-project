@@ -4,8 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { TimerService } from '../service/timer.service';
 import { faPaw } from '@fortawesome/free-solid-svg-icons';
-import { Image } from '../model/image';
-import { CardComponent } from './card/card.component';
 
 @Component({
   selector: 'app-game',
@@ -34,15 +32,19 @@ export class GameComponent implements OnInit {
     this.nav.show();
   }
 
-  startGame() {
-    this.gameService.startGame();
-  }
-
   cat() {
-    console.log('cat');
+    if (!this.gameService?.currentImage?.isCat) {
+      this.gameService.endGame();
+    }
+    this.gameService.setDone();
+    this.timerService.startTimer(15);
   }
 
   noCat() {
-    console.log('no cat');
+    if (this.gameService?.currentImage?.isCat) {
+      this.gameService.endGame();
+    }
+    this.gameService.setDone();
+    this.timerService.startTimer(15);
   }
 }

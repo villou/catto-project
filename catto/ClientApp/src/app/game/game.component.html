@@ -62,7 +62,6 @@
   <div class="w-full lg:w-2/5">
     <img
       [src]="gameService.currentImage?.url"
-      src="https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy83MTQ4MzMzL29yaWdpbi5qcGciLCJleHBpcmVzX2F0IjoxNjc1Mjg2MzcxfQ.msVTVRQ7w64k9kSrwHOvm-8_1_raAnnqpL8vT_IHZOQ/img.jpg?width=980"
       class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
     />
   </div>
@@ -74,15 +73,15 @@
   [description]="
     'You will have 15 seconds per picture to tell if there is a cat or not.'
   "
+  [score]="undefined"
   [icon]="'https://img.icons8.com/ultraviolet/40/000000/cat-footprint.png'"
   [buttonText]="'Start game'"
-  (click)="startGame()"
 ></app-card>
 <app-card
   *ngIf="gameService.state === 'finished'"
   [title]="'Its the end here !'"
-  [description]="'Your score was : '"
+  [description]="'Your score was :  '"
+  [score]="score"
   [icon]="'https://img.icons8.com/dotty/300/000000/f--k-this-thing.png'"
   [buttonText]="'Play again'"
-  (click)="startGame()"
 ></app-card>

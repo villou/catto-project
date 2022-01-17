@@ -12,6 +12,7 @@ export class TimerService {
   constructor() {}
 
   public startTimer(duration: number) {
+    clearInterval(this.timeout);
     this.remainingTime = duration;
     this.isStart = true;
     this.runTimer();
