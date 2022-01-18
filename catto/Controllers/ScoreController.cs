@@ -22,6 +22,7 @@ public class ScoreController : ControllerBase
     [HttpGet]
     public List<ScoreIndexDto> Get()
     {
+        //distinct
         return _context.Scores
             .Include(s => s.User)
             .OrderByDescending(s => s.Value)
@@ -30,7 +31,7 @@ public class ScoreController : ControllerBase
             .ToList();
     }
 
-    [HttpPost]
+    [HttpPost("save")]
     public async Task<ActionResult> SaveScore(ScoreDto scoreDto)
     {
         var user = await _userProvider.GetUserFromToken(HttpContext);
