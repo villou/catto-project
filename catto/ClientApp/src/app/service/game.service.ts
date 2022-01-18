@@ -3,6 +3,8 @@ import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import { TimerService } from './timer.service';
 import { Image } from './../model/image';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Score } from '../model/score';
 
 type State = 'waiting' | 'playing' | 'finished';
 @Injectable({
@@ -13,13 +15,19 @@ export class GameService {
   imagesStack: Image[] = [];
   imagesDone: Image[] = [];
   currentImage?: Image;
+
   get score() {
     return this.imagesDone?.length;
   }
 
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
   constructor(
     private timerService: TimerService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {
     timerService.onFinish.subscribe(() => {
       this.endGame();
@@ -31,7 +39,7 @@ export class GameService {
   }
 
   public startGame() {
-    this.imagesDone.length = 0;
+    this.imagesDone = [];
     this.setState('playing');
     this.shuffle();
     this.popStack();
@@ -41,14 +49,14 @@ export class GameService {
   public endGame() {
     this.timerService.stopTimer();
     this.setState('finished');
+    this.saveScore();
   }
 
   public setDone() {
-    if (!this.currentImage) {
-      return;
+    if (this.currentImage) {
+      this.imagesDone.push(this.currentImage);
+      this.popStack();
     }
-    this.imagesDone.push(this.currentImage);
-    this.popStack();
   }
 
   public popStack() {
@@ -57,6 +65,29 @@ export class GameService {
 
   public shuffle() {
     this.imagesStack = shuffleArray(imageBase);
+  }
+
+  public checkCurrentImage(isCat: boolean) {
+    if (this.currentImage?.isCat !== isCat) {
+      this.endGame();
+      return;
+    }
+    this.setDone();
+    this.timerService.startTimer(15);
+  }
+
+  saveScore() {
+    console.log(this.score);
+    this.http
+      .post<Score>('api/Score/save', { score: this.score }, this.httpOptions)
+      .subscribe(
+        (data: Score) => {
+          console.log('score saved');
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }
 

@@ -31,20 +31,4 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.nav.show();
   }
-
-  cat() {
-    if (!this.gameService?.currentImage?.isCat) {
-      this.gameService.endGame();
-    }
-    this.gameService.setDone();
-    this.timerService.startTimer(15);
-  }
-
-  noCat() {
-    if (this.gameService?.currentImage?.isCat) {
-      this.gameService.endGame();
-    }
-    this.gameService.setDone();
-    this.timerService.startTimer(15);
-  }
 }
