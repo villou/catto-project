@@ -2,7 +2,7 @@
 
 public class ScoreDto
 {
-    public int Value { get; set; }
+    public int Score { get; set; }
 }
 
 public class ScoreIndexDto

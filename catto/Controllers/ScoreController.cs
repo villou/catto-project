@@ -38,7 +38,7 @@ public class ScoreController : ControllerBase
 
         var score = new Score
         {
-            Value = scoreDto.Value,
+            Value = scoreDto.Score,
             UserId = user.Id
         };
         _context.Scores.Add(score);
