@@ -22,11 +22,11 @@ public class ScoreController : ControllerBase
     [HttpGet]
     public List<ScoreIndexDto> Get()
     {
-        //distinct
         return _context.Scores
             .Include(s => s.User)
             .OrderByDescending(s => s.Value)
             .Select(s => new ScoreIndexDto { Score = s.Value, Username = s.User.Username ?? "" })
+            .Distinct()
             .Take(5)
             .ToList();
     }
