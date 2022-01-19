@@ -4,11 +4,7 @@
       <h3 class="text-xl font-medium mb-4">
         Leaderboard {{ authService.user?.username }}
       </h3>
-      <app-user
-        *ngFor="let scores of scores"
-        [username]="scores.user.username"
-        [score]="scores.value"
-      ></app-user>
+      <app-user></app-user>
     </div>
   </div>
 </div>

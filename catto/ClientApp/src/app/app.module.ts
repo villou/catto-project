@@ -12,7 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { GameComponent } from './game/game.component';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { AccountComponent } from './account/account.component';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './leaderboard/user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { AuthGuard } from './guard/auth.guard';

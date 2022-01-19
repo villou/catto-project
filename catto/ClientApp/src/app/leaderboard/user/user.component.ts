@@ -1,3 +1,5 @@
+import { ScoreService } from './../../service/score.service';
+import { GameService } from '../../service/game.service';
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
@@ -6,11 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./user.component.css'],
 })
 export class UserComponent implements OnInit {
-  //@Input('avatar') avatar?: string;
-  @Input('username') username?: string;
-  @Input('score') score?: number;
-
-  constructor() {}
+  constructor(public scoreService: ScoreService) {}
 
   ngOnInit(): void {}
 }
