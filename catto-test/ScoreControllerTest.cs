@@ -19,7 +19,7 @@ public class ScoreControllerTest : IClassFixture<IntegrationFixtures>
     }
     
     [Fact]
-    public async Task Test1()
+    public async Task GetScoreList()
     {
         var client = _fixtures.SetupClient();
         var response = await client.GetAsync("/api/Score");
