@@ -15,26 +15,28 @@ public class UserProvider
 
     public async Task<UserDto?> Register(UserDto userDto)
     {
-        var user = new User()
         {
-            Id = userDto.Id,
-            Username = userDto.Username,
-            Password = userDto.Password,
+            var user = new User()
+            {
+                Id = userDto.Id,
+                Username = userDto.Username,
+                Password = userDto.Password,
 
-        };
+            };
         
-        var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
+            var userExists = await _context.Users.AnyAsync(u => u.Username == user.Username);
 
-        if (userExists)
-        {
-            return null;
+            if (userExists)
+            {
+                return null;
+            }
+
+        
+            var createdUser = await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+
+            return UserDto.FromUser(createdUser.Entity);
         }
-
-        
-        var createdUser = await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-
-        return UserDto.FromUser(createdUser.Entity);
     }
     
     public async Task<User?> GetUserFromToken(HttpContext httpContext)
@@ -49,8 +51,7 @@ public class UserProvider
             .FirstOrDefaultAsync(t => t.TokenKey == token);
         return userFromToken?.User;
     }
-
-    //TODO
+    
     public async Task<UserDto?> Login(UserDto userDto)
     {
         var userLogin = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username && u.Password == userDto.Password);
@@ -64,22 +65,31 @@ public class UserProvider
     }
 
     
-    public async Task<UserDto> UpdateUser(UserDto userDto)
+    public async Task<UserDto?> UpdateUser(UserDto userDto)
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
 
         if (user == null) 
         {
            return null; 
-        } 
-       
-        user.Password = userDto.Password; 
+        }
+
+        if (userDto.Password != null)
+        {
+            user.Password = userDto.Password;
+        }
+
+        if (userDto.Avatar != null)
+        {
+            user.Avatar = userDto.Avatar;
+        }
+        
         return UserDto.FromUser(user);
     }
 
-    public async Task<UserDto> DeleteUser(UserDto userDto)
+    public async Task<UserDto?> DeleteUser(UserDto userDto)
     {
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
 
         if (user == null) 
         {
@@ -91,9 +101,10 @@ public class UserProvider
         {
             return null;
         }
-
-        _context.Users.Remove(user);
+        
         _context.Tokens.Remove(token);
+        _context.Users.Remove(user);
+
 
         return UserDto.FromUser(user);
     }
