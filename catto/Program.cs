@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using catto.Models;
 using catto.Provider;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<CattoContext>();
+if (builder.Environment.EnvironmentName == "Test")
+// builder.Services.AddDbContext<CattoContext>(options => options.UseSqlite("Data Source=:memory:"));
+    builder.Services.AddDbContext<CattoContext>(options => options.UseInMemoryDatabase("catto"));
+else if (builder.Environment.IsDevelopment())
+    builder.Services.AddDbContext<CattoContext>(options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("App")));
+
 builder.Services.AddTransient<UserProvider>();
 builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
@@ -45,3 +52,8 @@ app.MapControllerRoute(
 app.MapFallbackToFile("index.html");
 
 app.Run();
+
+// for tests purposes
+public partial class Program
+{
+}
