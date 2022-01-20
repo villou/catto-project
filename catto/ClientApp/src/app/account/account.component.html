@@ -1,29 +1,52 @@
-﻿<div class="
-    flex
-    items-center
-    justify-center
-    h-screen
-  ">
-  <form [formGroup]="settingsForm" class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
+﻿<div class="flex items-center justify-center h-screen">
+  <form
+    [formGroup]="settingsForm"
+    class="px-20 py-10 rounded-md shadow-lg bg-indigo-900"
+  >
     <div class="flex flex-col items-center">
       <h3 class="text-xl font-medium mb-10">My account</h3>
       <div>
-        <app-avatar></app-avatar>
+        <app-avatar [avatarUrl]="user.avatar"></app-avatar>
       </div>
       <div>
-        <label class="text-sm font-medium block mb-1 mt-6">Username</label>
-        <input class="text-white sm:text-sm rounded-3xl w-full py-1 px-2 mb-4 bg-slate-400" id="username" type="text" formControlName="username" readonly>
+        <label class="text-sm font-medium block mb-1 mt-6">AvatarUrl</label>
+        <input
+          class="text-black sm:text-sm rounded-3xl w-full py-1 px-2 mb-2"
+          id="avatarURL"
+          type="text"
+          formControlName="avatar"
+          placeholder="Your avatar url"
+        />
+      </div>
+      <div>
+        <label class="text-sm font-medium block mb-1 mt-2">Username</label>
+        <input
+          class="text-white sm:text-sm rounded-3xl w-full py-1 px-2 mb-4 bg-slate-400"
+          id="username"
+          type="text"
+          formControlName="username"
+          readonly
+        />
       </div>
       <div>
         <label class="text-sm font-medium block mb-1">New password</label>
-        <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8" id="password" type="password" formControlName="password">
+        <input
+          class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8"
+          id="password"
+          type="password"
+          formControlName="password"
+        />
       </div>
       <div>
         <button class="btn btn-blue mb-10 text-sm" (click)="update()">
           Update
         </button>
       </div>
-      <span class="mb-8 text-center text-gray-200 md:text-xs"><button class="underline" (click)="delete()">delete account</button></span>
-        </div>
+      <span class="mb-8 text-center text-gray-200 md:text-xs"
+        ><button class="underline" (click)="delete()">
+          delete account
+        </button></span
+      >
+    </div>
   </form>
 </div>

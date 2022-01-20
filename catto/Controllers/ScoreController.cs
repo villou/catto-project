@@ -25,7 +25,7 @@ public class ScoreController : ControllerBase
         return _context.Scores
             .Include(s => s.User)
             .OrderByDescending(s => s.Value)
-            .Select(s => new ScoreIndexDto { Score = s.Value, Username = s.User.Username ?? "" })
+            .Select(s => new ScoreIndexDto { Score = s.Value, Username = s.User.Username ?? "", Avatar = s.User.Avatar ?? "https://64.media.tumblr.com/3a1730fccc0f8144e4823b333383855d/tumblr_ozu6r9kdg31rxye79o1_1280.jpg" })
             .Take(5)
             .ToList();
     }

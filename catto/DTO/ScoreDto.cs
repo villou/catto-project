@@ -8,5 +8,6 @@ public class ScoreDto
 public class ScoreIndexDto
 {
     public int Score { get; set; }
-    public string Username { get; set; }
+    public string? Username { get; set; }
+    public string? Avatar { get; set; }
 }

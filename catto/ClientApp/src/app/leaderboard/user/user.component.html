@@ -2,7 +2,7 @@
   class="flex mt-3 p-2 space-x-4 items-center shadow-md max-w-sm rounded-md bg-indigo-900 border-2 border-indigo-400"
   *ngFor="let score of scoreService.scores"
 >
-  <app-avatar></app-avatar>
+  <app-avatar [avatarUrl]="score.avatar"></app-avatar>
   <p class="text-white text-sm font-semibold flex-1">
     {{ score.username }}
   </p>
