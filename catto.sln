@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catto", "catto.csproj", "{D838FF20-6B88-4186-9B8E-B4BA8203A5D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catto", "catto\catto.csproj", "{0589DCFF-A6AE-448D-B5FC-E14E384860B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "catto-test", "catto-test\catto-test.csproj", "{DB9B886F-F3EE-4479-9245-326CD496680B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D838FF20-6B88-4186-9B8E-B4BA8203A5D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D838FF20-6B88-4186-9B8E-B4BA8203A5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D838FF20-6B88-4186-9B8E-B4BA8203A5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D838FF20-6B88-4186-9B8E-B4BA8203A5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0589DCFF-A6AE-448D-B5FC-E14E384860B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0589DCFF-A6AE-448D-B5FC-E14E384860B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0589DCFF-A6AE-448D-B5FC-E14E384860B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0589DCFF-A6AE-448D-B5FC-E14E384860B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB9B886F-F3EE-4479-9245-326CD496680B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB9B886F-F3EE-4479-9245-326CD496680B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB9B886F-F3EE-4479-9245-326CD496680B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB9B886F-F3EE-4479-9245-326CD496680B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
