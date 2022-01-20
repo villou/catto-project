@@ -27,9 +27,6 @@ export class ScoreService {
     this.http.get<Score[]>('api/Score').subscribe(
       (scores) => {
         this.scores = scores;
-        console.log(scores);
-        console.log(this.score);
-        console.log(this.username);
       },
       (error) => console.error(error)
     );

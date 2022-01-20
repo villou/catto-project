@@ -3,12 +3,11 @@
   *ngFor="let score of scoreService.scores"
 >
   <app-avatar></app-avatar>
-  <div>
-    <p class="text-white text-sm font-semibold">
-      {{ score.username }}
-    </p>
-  </div>
-  <div>
-    <p class="text-white font-semibold text-sm">{{ score.score }}</p>
-  </div>
+  <p class="text-white text-sm font-semibold flex-1">
+    {{ score.username }}
+  </p>
+
+  <p class="text-white font-semibold text-sm">
+    {{ score.score }}
+  </p>
 </div>
