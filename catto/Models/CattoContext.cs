@@ -8,7 +8,12 @@ public class CattoContext : DbContext
     public DbSet<Score> Scores { get; set; }
     public DbSet<Token> Tokens { get; set; }
 
-    public string DbPath { get; }
+    public string? DbPath { get; }
+    
+    public CattoContext(DbContextOptions<CattoContext> options)
+        : base(options)
+    {
+    }
     
     public CattoContext()
     {
@@ -18,5 +23,8 @@ public class CattoContext : DbContext
     }
     
     protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlite($"Data Source={DbPath}");
+    {
+        if (DbPath == null) return;
+        options.UseSqlite($"Data Source={DbPath}");
+    }
 }
