@@ -26,7 +26,6 @@ public class ScoreController : ControllerBase
             .Include(s => s.User)
             .OrderByDescending(s => s.Value)
             .Select(s => new ScoreIndexDto { Score = s.Value, Username = s.User.Username ?? "" })
-            .Distinct()
             .Take(5)
             .ToList();
     }
