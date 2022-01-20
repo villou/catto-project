@@ -26,14 +26,12 @@ public class UserController : ControllerBase
     return user == null ? Unauthorized() : Ok(user);
   }
 
-  // GET: api/user
   [HttpGet]
   public List<User> Get()
   {
     return _context.Users.ToList();
   }
 
-  // GET: api/user/1
   [HttpGet("{id}")]
   public async Task<ActionResult<UserDto>> GetUserById(int id)
   {
