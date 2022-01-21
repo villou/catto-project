@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Score } from '../model/score';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'platform',
 })
 export class ScoreService {
   scores?: Score[];

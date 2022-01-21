@@ -1,12 +1,7 @@
 import { NavbarService } from './../service/navbar.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/user';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  FormsModule,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -19,16 +14,8 @@ export class RegisterComponent implements OnInit {
   user: User | any | undefined;
 
   registerForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(10),
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(10),
-    ]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   httpOptions = {

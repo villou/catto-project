@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'platform',
 })
 export class TimerService {
   remainingTime = 0;

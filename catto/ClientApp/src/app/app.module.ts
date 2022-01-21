@@ -1,3 +1,4 @@
+import { AuthService } from './service/auth.service';
 import { NavbarService } from './service/navbar.service';
 import { LoginComponent } from './login/login.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -62,7 +63,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FontAwesomeModule,
   ],
-  providers: [NavbarService],
+  providers: [NavbarService, AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

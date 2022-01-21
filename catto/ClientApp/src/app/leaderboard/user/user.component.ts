@@ -1,7 +1,6 @@
 import { AuthService } from './../../service/auth.service';
 import { ScoreService } from './../../service/score.service';
-import { GameService } from '../../service/game.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user',

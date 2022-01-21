@@ -8,7 +8,7 @@ import { Score } from '../model/score';
 
 type State = 'waiting' | 'playing' | 'finished';
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'platform',
 })
 export class GameService {
   state: State = 'waiting';
