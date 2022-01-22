@@ -1,4 +1,3 @@
-import { ScoreService } from './../service/score.service';
 import { GameService } from './../service/game.service';
 import { NavbarService } from './../service/navbar.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +9,7 @@ import { faPaw } from '@fortawesome/free-solid-svg-icons';
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.css'],
-  providers: [ScoreService, GameService, TimerService],
+  providers: [GameService, TimerService],
 })
 export class GameComponent implements OnInit {
   faPaw = faPaw;
