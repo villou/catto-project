@@ -12,8 +12,6 @@ import { NavbarService } from '../service/navbar.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  user?: User | any | undefined;
-
   loginForm = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
@@ -28,46 +26,32 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private http: HttpClient,
     public nav: NavbarService
-  ) {
-    this.user = this.authService.user;
-    if (this.user) {
-      this.router.navigate(['/home']);
-    }
+  ) {}
+
+  ngOnInit(): void {
+    this.nav.hide();
   }
 
-  loginUser() {
+  login() {
+    const userLogged = {
+      username: this.loginForm.value.username,
+      password: this.loginForm.value.password,
+    };
+
+    if (!userLogged.username || !userLogged.password) {
+      return;
+    }
+
     this.http
-      .post<User>('api/User/login', this.user, this.httpOptions)
+      .post<User>('api/User/login', userLogged, this.httpOptions)
       .subscribe(
         (data: User) => {
-          this.user = data;
-          this.authService.setCurrentUser(this.user);
+          this.authService.setCurrentUser(data);
           this.router.navigate(['/home']);
         },
         (error) => {
           console.log(error);
         }
       );
-  }
-
-  login() {
-    let userLogged = {
-      username: this.loginForm.value.username,
-      password: this.loginForm.value.password,
-    };
-
-    if (!userLogged.username) {
-      return;
-    }
-    if (!userLogged.password) {
-      return;
-    }
-
-    this.user = userLogged;
-    this.loginUser();
-  }
-
-  ngOnInit(): void {
-    this.nav.hide();
   }
 }

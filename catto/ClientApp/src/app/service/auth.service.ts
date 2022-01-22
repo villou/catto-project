@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../model/user';
 
@@ -9,6 +9,7 @@ import { User } from '../model/user';
 export class AuthService {
   public user?: User;
   public isAuthenticated = false;
+  userLoad = new EventEmitter<User>();
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -33,8 +34,9 @@ export class AuthService {
     }
   }
 
-  setCurrentUser(user: User) {
+  setCurrentUser(user?: User) {
     if (user) {
+      this.userLoad.emit(user);
       this.user = user;
       this.isAuthenticated = true;
     } else {
