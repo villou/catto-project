@@ -14,8 +14,6 @@ import { FormGroup, FormControl } from '@angular/forms';
   providers: [ScoreService],
 })
 export class AccountComponent implements OnInit {
-  user?: User | any | undefined;
-
   settingsForm = new FormGroup({
     avatar: new FormControl(''),
     username: new FormControl(''),
@@ -30,35 +28,26 @@ export class AccountComponent implements OnInit {
     public nav: NavbarService,
     public authService: AuthService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.updateFormData(this.authService.user);
+    authService.userLoad.subscribe((user) => this.updateFormData(user));
+  }
+
+  updateFormData(user?: User) {
+    if (!user) return;
+    this.settingsForm.setValue({
+      avatar: user.avatar,
+      username: user.username,
+      password: '',
+    });
+  }
 
   ngOnInit(): void {
     this.nav.show();
-    this.authService.isAuthenticated
-      ? (this.user = this.authService.user)
-      : (this.user = undefined);
-
-    this.settingsForm.patchValue({
-      username: this.user.username,
-      avatar: this.user.avatar,
-    });
-    console.log(this.user.avatar);
-  }
-
-  updateUser() {
-    this.http.patch<User>('api/User', this.user, this.httpOptions).subscribe(
-      (data: User) => {
-        this.user = data;
-        this.authService.logout();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 
   update() {
-    let user = {
+    const user = {
       username: this.authService.user?.username,
       password: this.settingsForm.value.password,
       avatar: this.settingsForm.value.avatar,
@@ -68,8 +57,13 @@ export class AccountComponent implements OnInit {
       return;
     }
 
-    this.user = user;
-
-    this.updateUser();
+    this.http.patch<User>('api/User', user, this.httpOptions).subscribe(
+      (data: User) => {
+        this.authService.setCurrentUser(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

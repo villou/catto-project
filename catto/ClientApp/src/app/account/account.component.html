@@ -5,8 +5,8 @@
   >
     <div class="flex flex-col items-center">
       <h3 class="text-xl font-medium mb-10">My account</h3>
-      <div *ngIf="user.avatar">
-        <app-avatar [avatarUrl]="user.avatar"></app-avatar>
+      <div *ngIf="authService.user?.avatar">
+        <app-avatar [avatarUrl]="authService.user?.avatar"></app-avatar>
       </div>
       <div>
         <label class="text-sm font-medium block mb-1 mt-6">AvatarUrl</label>
