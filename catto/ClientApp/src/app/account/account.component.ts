@@ -57,13 +57,19 @@ export class AccountComponent implements OnInit {
       return;
     }
 
-    this.http.patch<User>('api/User', user, this.httpOptions).subscribe(
-      (data: User) => {
-        this.authService.setCurrentUser(data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.http
+      .put<User>(
+        `api/User/${this.authService.user?.id}`,
+        user,
+        this.httpOptions
+      )
+      .subscribe(
+        (data: User) => {
+          this.authService.setCurrentUser(data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 }
