@@ -1,6 +1,6 @@
 import { ScoreService } from './../service/score.service';
 import { AuthService } from './../service/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-leaderboard',
@@ -8,11 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leaderboard.component.css'],
   providers: [ScoreService],
 })
-export class LeaderboardComponent implements OnInit {
+export class LeaderboardComponent {
   constructor(
     public authService: AuthService,
     public scoreService: ScoreService
   ) {}
-
-  ngOnInit(): void {}
 }

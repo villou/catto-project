@@ -1,13 +1,12 @@
 import { GameService } from './../../service/game.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { Score } from 'src/app/model/score';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.css'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   @Input('title') title?: string;
   @Input('icon') icon?: string;
   @Input('description') description?: string;
@@ -20,5 +19,4 @@ export class CardComponent implements OnInit {
     this.gameService.startGame();
   }
 
-  ngOnInit(): void {}
 }
