@@ -79,7 +79,7 @@ export class GameService {
   saveScore() {
     console.log(this.score);
     this.http
-      .post<Score>('api/Score/save', { score: this.score }, this.httpOptions)
+      .post<Score>('api/Score', { score: this.score }, this.httpOptions)
       .subscribe(
         (data: Score) => {
           console.log('score saved');
