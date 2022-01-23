@@ -25,14 +25,14 @@ export class TimerService {
 
   runTimer() {
     const intervalId = window.setInterval(() => {
+      if (this.remainingTime === 0) {
+        this.stopTimer();
+        this.onFinish.emit();
+      }
       if (this.isStart) {
         this.remainingTime--;
       } else {
         this.stopTimer();
-      }
-      if (this.remainingTime === 0) {
-        this.stopTimer();
-        this.onFinish.emit();
       }
     }, 1000);
     this.timeout = intervalId;

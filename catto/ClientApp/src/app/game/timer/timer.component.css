@@ -1,0 +1,30 @@
+.container {
+  --shadow-color: hsl(244deg 65% 25%);
+  box-shadow: 0px 2px 2px var(--shadow-color);
+
+  border-radius: 16px;
+  background-color: #c2410c;
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  animation: warn 1000ms var(--ease-in-out) infinite;
+  @apply bg-orange-600 p-4 max-w-fit shadow-2xl;
+}
+
+.timer {
+  @apply text-white text-xl font-bold;
+}
+
+/* create keyframe  */
+@keyframes warn {
+  0% {
+  }
+  10% {
+    background-color: #b91c1c;
+    transform: scale(1.2);
+  }
+  80% {
+    background-color: #c2410c;
+    transform: scale(1);
+  }
+  100% {
+  }
+}
