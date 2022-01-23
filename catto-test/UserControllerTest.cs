@@ -27,7 +27,7 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
 
         await using var context = _fixtures.GetContext();
 
-        Assert.True(user?.Count <= 5);
+        Assert.Equal(context.Users.Count(), user?.Count);
     }
 
     [Fact]
@@ -45,8 +45,8 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
 
         await using var context = _fixtures.GetContext();
 
-        Assert.Equal("pascal", user?.Username);
-        Assert.Equal("motdepasse", user?.Password);
+        Assert.Equal(userDto.Username, user?.Username);
+        Assert.Equal(userDto.Password, user?.Password);
 
     }
 
@@ -54,7 +54,7 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
     public async Task LoginWrongCredentials()
     {
         var client = _fixtures.SetupClient();
-        var userDto = new UserDto()
+        var userDto = new UserDto
         {
             Username = "pascal",
             Password = "123456",
@@ -70,7 +70,7 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
     public async Task Register()
     {
         var client = _fixtures.SetupClient();
-        var userDto = new UserDto()
+        var userDto = new UserDto
         {
             Username = "martin",
             Password = "matin",
@@ -81,8 +81,8 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
         var response = await client.PostAsJsonAsync("/api/User/register", userDto);
         var user = _fixtures.GetBody<UserDto>(response);
 
-        Assert.Equal("martin", user?.Username);
-        Assert.Equal("matin", user?.Password);
+        Assert.Equal(userDto.Username, user?.Username);
+        Assert.Equal(userDto.Password, user?.Password);
         Assert.Equal(context.Users.Count(), userCount + 1);
     }
 
@@ -91,7 +91,7 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
     {
         var client = _fixtures.SetupClient();
 
-        var userDto = new UserDto()
+        var userDto = new UserDto
         {
             Username = "pascal",
             Password = "zerozero",
@@ -102,5 +102,54 @@ public class UserControllerTest : IClassFixture<IntegrationFixtures>
 
         Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
         Assert.Equal(context.Users.Count(), userCount);
+    }
+    
+    [Fact]
+    public async Task GetUserInexistantId()
+    {
+        var client = _fixtures.SetupClient();
+        var response = await client.GetAsync("/api/User/26");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+    }
+    
+    [Fact]
+    public async Task UpdateUser()
+    {
+        var client = _fixtures.SetupClient();
+        var userDto = new UserDto
+        {
+            Password = "newpassword",
+        };
+        var response = await client.PutAsJsonAsync("/api/User/1", userDto);
+        
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+    
+    [Fact]
+    public async Task Logout()
+    {
+        var client = _fixtures.SetupClient();
+        var userDto = new UserDto
+        {
+            Username = "pascal",
+            Password = "motdepasse",
+        };
+        await client.PostAsJsonAsync("/api/User/login", userDto);
+        var response = await client.PostAsJsonAsync("/api/User/logout", "");
+        
+        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+    }
+    
+    [Fact]
+    public async Task Delete()
+    {
+        var client = _fixtures.SetupClient();
+        await using var context = _fixtures.GetContext();
+        var userCount = context.Users.Count();
+
+        var response = await client.DeleteAsync("api/User/1");
+        response.EnsureSuccessStatusCode();
+
+        Assert.Equal(context.Users.Count(), userCount - 1);
     }
 }
