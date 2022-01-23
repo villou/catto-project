@@ -1,31 +1,42 @@
-<div class="
-    flex
-    items-center
-    justify-center
-    h-screen
-  ">
-  
+<div class="flex items-center justify-center h-screen">
   <form form [formGroup]="loginForm">
-  <div class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
-    <!-- image of cat -->
-      <img class="hidden md:block rounded-full ml-8 w-28 h-28 absolute top-20 transform" src="assets/hello.png" alt="" />
-    <div class="flex flex-col items-center">
-      <h3 class="text-xl font-medium mb-10">Login</h3>
-          <div>
-            <label class="text-sm font-medium block mb-1">Username</label>
-            <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-4" id="username" type="text" formControlName="username">
-          </div>
-          <div>
-           <label class="text-sm font-medium block mb-1">Password</label>
-           <input class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8" id="password" type="password" formControlName="password">
-          </div>
-          <div>
-         <button class="btn btn-blue mb-10 text-sm" (click)="login()">
-          Login
-        </button>
+    <div class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
+      <!-- image of cat -->
+      <img
+        class="hidden md:block rounded-full ml-8 w-28 h-28 absolute top-20 transform"
+        src="assets/hello.png"
+        alt=""
+      />
+      <div class="flex flex-col items-center">
+        <h3 class="text-xl font-medium mb-10">Login</h3>
+        <div>
+          <label class="text-sm font-medium block mb-1">Username</label>
+          <input
+            class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-4"
+            id="username"
+            type="text"
+            formControlName="username"
+          />
         </div>
-        <span class="mb-8 text-center text-gray-200 md:text-xs">Not a member ? <a [routerLink]="['/register']" class="underline">Register</a></span>
+        <div>
+          <label class="text-sm font-medium block mb-1">Password</label>
+          <input
+            class="text-gray-900 sm:text-sm rounded-3xl w-full py-1 px-2 mb-8"
+            id="password"
+            type="password"
+            formControlName="password"
+          />
+        </div>
+        <div>
+          <button class="btn btn-blue mb-10 text-sm" (click)="login()">
+            Login
+          </button>
+        </div>
+        <span class="mb-8 text-center text-gray-200 md:text-xs"
+          >Not a member ?
+          <a [routerLink]="['/register']" class="underline">Register</a></span
+        >
+      </div>
     </div>
-  </div>
   </form>
 </div>
