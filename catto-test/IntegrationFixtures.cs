@@ -38,16 +38,53 @@ public class IntegrationFixtures : WebApplicationFactory<Program>
       Password = "motdepasse",
       Avatar = "https://imageserver.petsbest.com/marketing/blog/cat-behavior-issues.jpg",
     };
-    context.Users.Add(user);
+
+    var user2 = new User
+    {
+      Username = "poisson",
+      Password = "passedemot",
+      Avatar = "https://imageserver.petsbest.com/marketing/blog/cat-behavior-issues.jpg",
+    };
+    context.Users.AddRange(user, user2);
     context.SaveChanges();
 
-    var score = new Score
+
+    var score1 = new Score
     {
       Id = 1,
       UserId = user.Id,
       Value = 10,
     };
-    context.Scores.Add(score);
+
+    var score2 = new Score
+    {
+      Id = 2,
+      UserId = user.Id,
+      Value = 10,
+    };
+
+    var score3 = new Score
+    {
+      Id = 3,
+      UserId = user.Id,
+      Value = 10,
+    };
+
+    var score4 = new Score
+    {
+      Id = 4,
+      UserId = user.Id,
+      Value = 10,
+    };
+
+    var score5 = new Score
+    {
+      Id = 5,
+      UserId = user.Id,
+      Value = 10,
+    };
+
+    context.Scores.AddRange(score1, score2, score3, score4, score5);
     context.SaveChanges();
   }
 
