@@ -4,6 +4,7 @@ using catto.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace catto_test;
 
@@ -53,6 +54,6 @@ public class IntegrationFixtures : WebApplicationFactory<Program>
 
     public T? GetBody<T>(HttpResponseMessage response)
     {
-        return JsonSerializer.Deserialize<T>(response.Content.ReadAsStringAsync().Result);
+        return JsonConvert.DeserializeObject<T>(response.Content.ReadAsStringAsync().Result);
     }
 }
