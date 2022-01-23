@@ -1,11 +1,8 @@
 using Xunit;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using catto.Models;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using catto.DTO;
+
 
 namespace catto_test;
 
@@ -19,10 +16,14 @@ public class ScoreControllerTest : IClassFixture<IntegrationFixtures>
     }
     
     [Fact]
-    public async Task GetScoreList()
+    public async Task GetMaxFiveScoreList()
     {
         var client = _fixtures.SetupClient();
         var response = await client.GetAsync("/api/Score");
-        var scores = System.Text.Json.JsonSerializer.Deserialize<List<Score>>(response.Content.ReadAsStringAsync().Result); 
+        var scores = _fixtures.GetBody<List<ScoreIndexDto>>(response);
+        
+        await using var context = _fixtures.GetContext();
+        
+        Assert.True(scores?.Count <= 5);        
     }
 }
