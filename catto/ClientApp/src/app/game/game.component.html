@@ -66,19 +66,17 @@
 
 <app-card
   *ngIf="gameService.state === 'waiting'"
-  [title]="'Are you ready?'"
-  [description]="
-    'You will have 15 seconds per picture to tell if there is a cat or not.'
-  "
-  [score]="undefined"
-  [icon]="'https://img.icons8.com/ultraviolet/40/000000/cat-footprint.png'"
-  [buttonText]="'Start game'"
+  title="Are you ready?"
+  icon="https://img.icons8.com/ultraviolet/40/000000/cat-footprint.png"
+  buttonText="Start game"
+  description="You will have 15 seconds per picture to tell if there is a cat or not."
+  (start)="gameService.startGame()"
 ></app-card>
 <app-card
   *ngIf="gameService.state === 'finished'"
-  [title]="'Its the end here !'"
-  [description]="'Your score was :  '"
+  title="Its the end here !"
+  description="Your score was : "
   [score]="score"
-  [icon]="'https://img.icons8.com/dotty/300/000000/f--k-this-thing.png'"
-  [buttonText]="'Play again'"
+  icon="https://img.icons8.com/dotty/300/000000/f--k-this-thing.png"
+  buttonText="Play again"
 ></app-card>
