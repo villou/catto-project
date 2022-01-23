@@ -3,16 +3,15 @@
   class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-32 lg:my-0"
 >
   <div
-    class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl blue-gradient mx-6 lg:mx-0"
+    class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl blue-gradient mx-6 lg:mx-0 relative"
   >
     <div class="p-4 md:p-12 text-center lg:text-left">
-      <!-- Image for mobile view-->
       <div
-        class="block lg:hidden mx-auto mt-2 h-60 w-68 bg-cover bg-center"
-        style="
-          background-image: url('https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy83MTQ4MzMzL29yaWdpbi5qcGciLCJleHBpcmVzX2F0IjoxNjc1Mjg2MzcxfQ.msVTVRQ7w64k9kSrwHOvm-8_1_raAnnqpL8vT_IHZOQ/img.jpg?width=980');
-        "
-      ></div>
+        class="absolute right-0 left-0 flex justify-center"
+        style="top: -30px"
+      >
+        <app-timer [time]="timerService.remainingTime"></app-timer>
+      </div>
 
       <h1 class="text-2xl font-bold pt-8 lg:pt-0 text-white">
         Do you see a cat ?
@@ -32,12 +31,6 @@
       >
         Your score :
         <span class="pl-2 font-normal text-white">{{ score }}</span>
-      </p>
-      <p
-        class="pt-4 text-white text-base font-bold flex items-center justify-center lg:justify-start"
-      >
-        Time left :
-        <span class="pl-2 font-normal text-white">{{ time }}</span>
       </p>
 
       <!--Cat buttons-->
@@ -66,7 +59,7 @@
   <div class="w-full lg:w-2/5">
     <img
       [src]="gameService.currentImage?.url"
-      class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
+      class="rounded-none lg:rounded-lg shadow-2xl block"
     />
   </div>
 </div>
