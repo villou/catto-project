@@ -32,7 +32,7 @@ public class UserController : ControllerBase
     return _context.Users.ToList();
   }
 
-  [HttpGet("{id}")]
+  [HttpGet("{id:int}")]
   public async Task<ActionResult<UserDto>> GetUserById(int id)
   {
     var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
@@ -46,10 +46,10 @@ public class UserController : ControllerBase
 
   }
 
-  [HttpPatch]
-  public async Task<ActionResult<UserDto>> Update([FromBody] UserDto user)
+  [HttpPut("{id:int}")]
+  public async Task<ActionResult<UserDto>> Update(int id, [FromBody] UserDto user)
   {
-    var userToUpdate = await _userProvider.UpdateUser(user);
+    var userToUpdate = await _userProvider.UpdateUser(id, user);
 
     if (userToUpdate == null)
     {
@@ -117,10 +117,10 @@ public class UserController : ControllerBase
     return NoContent();
   }
 
-  [HttpDelete]
-  public async Task<ActionResult> Delete(UserDto user)
+  [HttpDelete("{id:int}")]
+  public async Task<ActionResult> Delete(int id)
   {
-    var userToDelete = await _userProvider.DeleteUser(user);
+    var userToDelete = await _userProvider.DeleteUser(id);
 
     if (userToDelete == null)
     {
@@ -128,7 +128,7 @@ public class UserController : ControllerBase
     }
 
     await _context.SaveChangesAsync();
-    return Ok();
+    return NoContent();
 
   }
 }

@@ -30,10 +30,12 @@ public class ScoreController : ControllerBase
             .ToList();
     }
 
-    [HttpPost("save")]
-    public async Task<ActionResult> SaveScore(ScoreDto scoreDto)
+    [HttpPost]
+    public async Task<ActionResult> Post(ScoreDto scoreDto)
     {
         var user = await _userProvider.GetUserFromToken(HttpContext);
+        
+        if (user == null) return Unauthorized();
 
         var score = new Score
         {
@@ -42,11 +44,11 @@ public class ScoreController : ControllerBase
         };
         _context.Scores.Add(score);
         await _context.SaveChangesAsync();
-        return Ok();
+        return NoContent();
     }
 
     [HttpGet("{userId:int}")]
-    public async Task<ActionResult<List<Score>>> GetScoreByUserId(int userId)
+    public async Task<ActionResult<List<ScoreDto>>> GetScoreByUserId(int userId)
     {
         var user = _userProvider.GetUserFromToken(HttpContext);
         if (user.Id != userId)
