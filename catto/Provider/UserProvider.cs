@@ -65,9 +65,9 @@ public class UserProvider
   }
 
 
-  public async Task<UserDto?> UpdateUser(UserDto userDto)
+  public async Task<UserDto?> UpdateUser(int userId, UserDto userDto)
   {
-    var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == userDto.Username);
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
     if (user == null)
     {
@@ -87,22 +87,21 @@ public class UserProvider
     return UserDto.FromUser(user);
   }
 
-  public async Task<UserDto?> DeleteUser(UserDto userDto)
+  public async Task<UserDto?> DeleteUser(int userId)
   {
-    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+    var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
     if (user == null)
     {
       return null;
     }
 
-    var token = await _context.Tokens.FirstOrDefaultAsync(t => t.UserId == user.Id);
-    if (token == null)
+    var token = await _context.Tokens.Where(t => t.UserId == user.Id).ToListAsync();
+    if (token.Count > 0)
     {
-      return null;
+      _context.Tokens.RemoveRange(token);
     }
-
-    _context.Tokens.Remove(token);
+    
     _context.Users.Remove(user);
     return UserDto.FromUser(user);
   }
