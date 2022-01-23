@@ -50,7 +50,7 @@ public class UserController : ControllerBase
   public async Task<ActionResult<UserDto>> Update([FromBody] UserDto user)
   {
     var userToUpdate = await _userProvider.UpdateUser(user);
-    
+
     if (userToUpdate == null)
     {
       return BadRequest("Can't update user");
@@ -77,15 +77,14 @@ public class UserController : ControllerBase
 
     await _context.SaveChangesAsync();
 
-    //return userLogin;
-    return CreatedAtAction(nameof(Login), new { id = userLogin.Id }, userLogin);
+    return Created("", userLogin);
   }
 
   [HttpPost("register")]
   public async Task<ActionResult<UserDto?>> Register(UserDto user)
   {
     var createdUser = await _userProvider.Register(user);
-    
+
     if (createdUser == null)
     {
       return Conflict("User already exists");
@@ -97,9 +96,7 @@ public class UserController : ControllerBase
 
     await _context.SaveChangesAsync();
 
-    // return createdUser;
-    return CreatedAtAction(nameof(Register), new { id = createdUser.Id }, createdUser);
-
+    return Created("", createdUser);
   }
 
   [HttpPost("logout")]
@@ -117,9 +114,9 @@ public class UserController : ControllerBase
     }
     await _context.SaveChangesAsync();
 
-    return Ok();
+    return NoContent();
   }
-  
+
   [HttpDelete]
   public async Task<ActionResult> Delete(UserDto user)
   {
