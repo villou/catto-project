@@ -2,7 +2,6 @@ import { ScoreService } from './../service/score.service';
 import { User } from './../model/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { NavbarService } from '../service/navbar.service';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -10,7 +9,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css'],
   providers: [ScoreService],
 })
 export class AccountComponent implements OnInit {

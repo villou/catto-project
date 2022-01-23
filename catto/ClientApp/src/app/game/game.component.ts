@@ -8,7 +8,6 @@ import { faPaw } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.css'],
   providers: [GameService, TimerService],
 })
 export class GameComponent implements OnInit {
