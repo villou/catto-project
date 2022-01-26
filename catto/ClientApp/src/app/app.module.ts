@@ -31,13 +31,12 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent,
   },
-  { path: 'game', component: GameComponent, canActivate: [AuthGuard] },
+  { path: 'game', component: GameComponent },
   {
     path: 'leaderboard',
     component: LeaderboardComponent,
-    canActivate: [AuthGuard],
   },
-  { path: 'account', component: AccountComponent, canActivate: [AuthGuard] },
+  { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
 ];

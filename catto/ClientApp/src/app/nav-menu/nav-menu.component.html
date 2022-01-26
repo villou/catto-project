@@ -16,19 +16,13 @@
         >[connected as: {{ authService.user?.username }} ]</span
       >
       <a [routerLink]="['/home']">Home</a>
-      <a *ngIf="!authService.isAuthenticated" [routerLink]="['/login']"
-        >Login</a
-      >
-      <a *ngIf="authService.isAuthenticated" [routerLink]="['/game']">Game</a>
-      <a *ngIf="authService.isAuthenticated" [routerLink]="['/leaderboard']"
+      <a  [routerLink]="['/game']">Game</a>
+      <a  [routerLink]="['/leaderboard']"
         >Leaderboard</a
       >
-      <a *ngIf="authService.isAuthenticated" [routerLink]="['/account']"
+      <a [routerLink]="['/account']"
         >Account</a
       >
-      <a *ngIf="authService.isAuthenticated" (click)="logout()"
-        ><fa-icon [icon]="faSignOutAlt" class="text-sm cursor-pointer"></fa-icon
-      ></a>
     </div>
   </nav>
 </header>
