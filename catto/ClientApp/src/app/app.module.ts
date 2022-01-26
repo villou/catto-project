@@ -16,7 +16,6 @@ import { AccountComponent } from './account/account.component';
 import { UserComponent } from './leaderboard/user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AvatarComponent } from './avatar/avatar.component';
-import { AuthGuard } from './guard/auth.guard';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CardComponent } from './game/card/card.component';
 import { TimerComponent } from './game/timer/timer.component';
