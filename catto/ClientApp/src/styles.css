@@ -44,3 +44,10 @@ html {
   display: flex;
   justify-content: center;
 }
+
+html,
+body,
+app-route {
+  height: 100%;
+  display: block;
+}
