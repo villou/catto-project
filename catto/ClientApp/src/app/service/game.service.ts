@@ -11,7 +11,7 @@ type State = 'waiting' | 'playing' | 'finished';
   providedIn: 'platform',
 })
 export class GameService {
-  state: State = 'waiting';
+  state: State = 'playing';
   imagesStack: Image[] = [];
   imagesDone: Image[] = [];
   currentImage?: Image;
