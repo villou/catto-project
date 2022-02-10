@@ -1,13 +1,16 @@
 <div class="flex items-center justify-center h-screen">
   <form form [formGroup]="loginForm">
-    <div class="px-20 py-10 rounded-md shadow-lg bg-indigo-900">
+    <div class="rounded-md shadow-lg bg-indigo-900 relative">
       <!-- image of cat -->
-      <img
-        class="hidden md:block rounded-full ml-8 w-28 h-28 absolute top-20 transform"
-        src="assets/hello.png"
-        alt=""
-      />
-      <div class="flex flex-col items-center">
+      <div class="login-hello-wrapper">
+        <img
+          class="hidden md:block rounded-full w-28 h-28 top-0"
+          src="assets/hello.png"
+          alt=""
+        />
+      </div>
+
+      <div class="px-20 py-10 flex flex-col items-center">
         <h3 class="text-xl font-medium mb-10">Login</h3>
         <div>
           <label class="text-sm font-medium block mb-1">Username</label>

@@ -35,3 +35,12 @@ html {
 .btn-blue:hover {
   @apply bg-indigo-600;
 }
+
+.login-hello-wrapper {
+  position: absolute;
+  top: -64px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
