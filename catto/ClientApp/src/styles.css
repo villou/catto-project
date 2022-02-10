@@ -52,8 +52,7 @@ html {
   transition: transform 400ms ease-in-out, border-color 200ms ease-in-out,
     filter 200ms ease-in-out;
 
-  @apply border-4
-  /*@apply border-2 m-1 w-12 h-12 relative flex justify-center items-center rounded-full bg-gray-400 hover:bg-slate-500;*/;
+  @apply border-4;
 }
 
 .vote-button-wrapper:hover .vote-button {
