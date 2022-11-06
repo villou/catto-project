@@ -35,3 +35,46 @@ html {
 .btn-blue:hover {
   @apply bg-indigo-600;
 }
+
+.login-hello-wrapper {
+  position: absolute;
+  top: -64px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.vote-button {
+  padding: 8px;
+  border-radius: 16px;
+  filter: drop-shadow(0 2px 4px #00000065);
+  transition: transform 400ms ease-in-out, border-color 200ms ease-in-out,
+    filter 200ms ease-in-out;
+
+  @apply border-4;
+}
+
+.vote-button-wrapper:hover .vote-button {
+  transition: transform 100ms ease-in-out;
+  filter: drop-shadow(0 4px 4px #00000085);
+
+  transform: translateY(-4px);
+}
+
+.vote-button-wrapper:active .vote-button {
+  transition: transform 100ms ease-in-out;
+
+  transform: translateY(2px);
+}
+
+.vote-button > svg {
+  @apply w-12 h-12 object-contain;
+}
+
+html,
+body,
+app-route {
+  height: 100%;
+  display: block;
+}
