@@ -11,7 +11,6 @@ export class HomeComponent implements OnInit {
   constructor(
     public nav: NavbarService,
     private router: Router,
-    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -19,8 +18,6 @@ export class HomeComponent implements OnInit {
   }
 
   play() {
-    this.authService.isAuthenticated
-      ? this.router.navigate(['/game'])
-      : this.router.navigate(['/login']);
+  this.router.navigate(['/game']);
   }
 }
